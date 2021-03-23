@@ -119,19 +119,22 @@ ws.Range("O2:O4").Columns.AutoFit
       ToTvol = ToTvol + ws.Cells(i, 7).Value
 
     End If
-    'Give formatting to Yearly Change
-'Red if it is negative numbers and Green if it is positive number
+    
 
-If ws.Cells(i, 10).Value > 0 Then
-ws.Cells(i, 10).Interior.ColorIndex = 4
-ElseIf ws.Cells(i, 10).Value < 0 Then
-ws.Cells(i, 10).Interior.ColorIndex = 3
-
-End If
 
   Next i
+For i = 1 to lastrow 
 
+'Give formatting to Yearly Change
+'Red if it is negative numbers and Green if it is positive number
 
-Next ws
+  If ws.Cells(i, 10).Value > 0 Then
+  ws.Cells(i, 10).Interior.ColorIndex = 4
+  ElseIf ws.Cells(i, 10).Value < 0 Then
+  ws.Cells(i, 10).Interior.ColorIndex = 3
+  End If
+    Next i
+
+      Next ws
 
 End Sub
