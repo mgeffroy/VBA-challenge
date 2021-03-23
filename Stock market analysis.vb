@@ -88,7 +88,7 @@ ws.Range("O2:O4").Columns.AutoFit
       If Opening = 0 Then
       Percentchange = 0
       Else
-      Percentchange = (Closing - Opening ) / Opening
+      Percentchange = Yearlychange / Opening
       End If
 
       ' Print ticker in summary table
@@ -97,12 +97,12 @@ ws.Range("O2:O4").Columns.AutoFit
       ' Print the total volume in table
       ws.Range("L" & Summary_Table_Row).Value = ToTvol
 
-      'Print the Yearly change in table
+      ' Print the Yearly change in table
       ws.Range("J" & Summary_Table_Row).Value = Yearlychange
 
-      'Print the percent change in table
+      ' Print the percent change in table
       ws.Range("K" & Summary_Table_Row).Value = Percentchange
-      'Give formatting to percent
+      ' Give formatting to percent
       ws.Range("K:K").NumberFormat = "0.00%"
     
     
@@ -111,6 +111,9 @@ ws.Range("O2:O4").Columns.AutoFit
       
       ' Reset the total volume to prepare it for next ticker
       ToTvol = 0
+
+      'Go to next opening ticker 
+      Opening = ws.Cells(i + 1, 3)
 
     ' If immediate cell is same ticker
     Else
@@ -134,7 +137,7 @@ For i = 1 to lastrow
   ws.Cells(i, 10).Interior.ColorIndex = 3
   End If
     Next i
-
+' End to go to the next worksheet and do everything again
       Next ws
 
 End Sub
