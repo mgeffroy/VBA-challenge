@@ -72,7 +72,12 @@ ws.Range("A1:L1").HorizontalAlignment = xlCenter
       Yearlychange = Closing - Opening
       'Calculate Change percentage
       'Probem with PLANT :z
+
+      If Yearlychange = 0 Then
+      Percentchange = 0
+      Else
       Percentchange = Opening / Yearlychange
+      End If
 
       ' Print ticker in summary table
      ws.Range("I" & Summary_Table_Row).Value = Ticker
@@ -85,7 +90,7 @@ ws.Range("A1:L1").HorizontalAlignment = xlCenter
 
       'Print the percent change in table
       ws.Range("K" & Summary_Table_Row).Value = Percentchange
-      ws.Range("K" & Summary_Table_Row).NumberFormat = "00.00%"
+    
     
       ' Add one to the summary table row
       Summary_Table_Row = Summary_Table_Row + 1
@@ -106,8 +111,7 @@ If ws.Cells(i, 10).Value > 0 Then
 ws.Cells(i, 10).Interior.ColorIndex = 4
 ElseIf ws.Cells(i, 10).Value < 0 Then
 ws.Cells(i, 10).Interior.ColorIndex = 3
-Else
-ws.Cells(i, 10).Interior.ColorIndex = 2
+
 End If
 
   Next i
@@ -115,4 +119,3 @@ End If
 Next ws
 
 End Sub
-  
