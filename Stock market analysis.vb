@@ -8,18 +8,25 @@ Sub Stockmarket():
 'Things have to be valid for all spreadsheets
 
 'Plan of action
+'Loop for all spreadsheets
+
+For Each ws In Worksheets
 
 'Variables: name, type,value (depending on variable)
 Dim Ticker As String
 
 Dim Yearlychange As Double
 Yearlychange = 0
+'Yearly change = Opening_Val - Closing_Val'
 
 Dim Opening_val As Double
+Opening_val =ws.cells(2,3).Value 
 
 Dim Closing_val As Double
+Closing_val = ws.Cells(2,6).Value 
 
 Dim Percentchange As Double
+'Yearlychange in percent 
 
 Dim ToTvol As LongLong
 Totvol = 0
@@ -29,10 +36,6 @@ Totvol = 0
 Dim Summary_Table_Row As Integer
   Summary_Table_Row = 2
   
-
-'Loop for all spreadsheets
-
-For Each ws In Worksheets
 
 
 
@@ -49,25 +52,25 @@ ws.Range("A1:L1").HorizontalAlignment = xlCenter
 
 'Create lastrow variable
  Dim lastrow as Long  
-  lastrow = Cells(Rows.Count, 1).End(xlUp).Row
+  lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
   
   ' Loop through all the tickers 
   For i = 2 To lastrow
 
-    ' If same ticker ..... if not 
-    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    ' If same ticker ..... 
+    If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
 
       ' Set ticker name
-      Ticker = Cells(i, 1).Value
+      Ticker = ws.Cells(i, 1).Value
 
       ' Add to the Total Volume
-      TotVol = TotVol + Cells(i, 7).Value
+      TotVol = TotVol + ws.Cells(i, 7).Value
 
       ' Print ticker in summary table
-      Range("I" & Summary_Table_Row).Value = Ticker
+     ws.Range("I" & Summary_Table_Row).Value = Ticker
 
       ' Print the total volume in table 
-      Range("L" & Summary_Table_Row).Value = TotVol
+      ws.Range("L" & Summary_Table_Row).Value = TotVol
 
       ' Add one to the summary table row
       Summary_Table_Row = Summary_Table_Row + 1
@@ -79,7 +82,7 @@ ws.Range("A1:L1").HorizontalAlignment = xlCenter
     Else
 
       ' Add to the total volume
-      TotVol= TotVol + Cells(i, 7 ).Value
+      TotVol= TotVol + ws.Cells(i, 7 ).Value
 
     End If
 
