@@ -17,7 +17,7 @@ Dim Ticker As String
 
 Dim Yearlychange As Double
 Yearlychange = 0
-'Yearly change = Opening_Val - Closing_Val'
+'Yearly change = Closing - Opening '
 
 Dim Opening As Double
 Opening = ws.Cells(2, 3).Value
@@ -37,10 +37,10 @@ Dim Summary_Table_Row As Integer
   Summary_Table_Row = 2
   
 
-'Bonus: Add variables 
-Dim grt_increase as Integer
-Dim grt_decrease as Integer
-Dim grt_totvol as LongLong 
+'Bonus: Add variables
+Dim grt_increase As Integer
+Dim grt_decrease As Integer
+Dim grt_totvol As LongLong
 
 
 'Name headers in spreadsheet ( with a little bit of formatting)
@@ -55,8 +55,8 @@ ws.Columns("B").Columns.AutoFit
 ws.Range("A1:L1").HorizontalAlignment = xlCenter
 
 'Bonus headers and cells with names
-ws.Cells(1,16).Value = "Ticker"
-ws.Cells(1,17).Value = "Value"
+ws.Cells(1, 16).Value = "Ticker"
+ws.Cells(1, 17).Value = "Value"
 ws.Range("O2").Value = "Greatest Increase %"
 ws.Range("O3").Value = "Greatest Decrease %"
 ws.Range("O4").Value = "Gretest Total Volume"
@@ -85,10 +85,10 @@ ws.Range("O2:O4").Columns.AutoFit
       'Calculate Change percentage
       'Probem with PLANT :z
 
-      If Yearlychange = 0 Then
+      If Opening = 0 Then
       Percentchange = 0
       Else
-      Percentchange = Opening / Yearlychange
+      Percentchange = (Closing - Opening ) / Opening
       End If
 
       ' Print ticker in summary table
@@ -102,6 +102,8 @@ ws.Range("O2:O4").Columns.AutoFit
 
       'Print the percent change in table
       ws.Range("K" & Summary_Table_Row).Value = Percentchange
+      'Give formatting to percent
+      ws.Range("K:K").NumberFormat = "0.00%"
     
     
       ' Add one to the summary table row
@@ -127,8 +129,7 @@ ws.Cells(i, 10).Interior.ColorIndex = 3
 End If
 
   Next i
-'Give formatting to percent 
-Range("K:K").NumberFormat = "0.00%"
+
 
 Next ws
 
