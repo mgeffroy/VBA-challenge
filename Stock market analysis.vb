@@ -19,17 +19,17 @@ Dim Yearlychange As Double
 Yearlychange = 0
 'Yearly change = Opening_Val - Closing_Val'
 
-Dim Opening_val As Double
-Opening_val =ws.cells(2,3).Value 
+Dim Opening As Double
+Opening = ws.Cells(2, 3).Value
 
-Dim Closing_val As Double
-Closing_val = ws.Cells(2,6).Value 
+Dim Closing As Double
+'Could be Closing = ws.Cells(2,6).Value but it has to be the last value of the ticker
 
 Dim Percentchange As Double
-'Yearlychange in percent 
+'Yearlychange in percent
 
 Dim ToTvol As LongLong
-Totvol = 0
+ToTvol = 0
 
 
 'Summary table to keep track of tickers
@@ -51,43 +51,68 @@ ws.Columns("B").Columns.AutoFit
 ws.Range("A1:L1").HorizontalAlignment = xlCenter
 
 'Create lastrow variable
- Dim lastrow as Long  
+ Dim lastrow As Long
   lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
   
-  ' Loop through all the tickers 
+  ' Loop through all the tickers
   For i = 2 To lastrow
 
-    ' If same ticker ..... 
+    ' If same ticker .....
     If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
 
       ' Set ticker name
       Ticker = ws.Cells(i, 1).Value
 
       ' Add to the Total Volume
-      TotVol = TotVol + ws.Cells(i, 7).Value
+      ToTvol = ToTvol + ws.Cells(i, 7).Value
+
+      'Add closing price value
+      Closing = ws.Cells(i, 6).Value
+      'Calculate Yearly Change
+      Yearlychange = Closing - Opening
+      'Calculate Change percentage
+      'Probem with PLANT :z
+      Percentchange = Opening / Yearlychange
 
       ' Print ticker in summary table
      ws.Range("I" & Summary_Table_Row).Value = Ticker
 
-      ' Print the total volume in table 
-      ws.Range("L" & Summary_Table_Row).Value = TotVol
+      ' Print the total volume in table
+      ws.Range("L" & Summary_Table_Row).Value = ToTvol
 
+      'Print the Yearly change in table
+      ws.Range("J" & Summary_Table_Row).Value = Yearlychange
+
+      'Print the percent change in table
+      ws.Range("K" & Summary_Table_Row).Value = Percentchange
+      ws.Range("K" & Summary_Table_Row).NumberFormat = "00.00%"
+    
       ' Add one to the summary table row
       Summary_Table_Row = Summary_Table_Row + 1
       
-      ' Reset the total volume to prepare it for next ticker 
-      TotVol = 0
+      ' Reset the total volume to prepare it for next ticker
+      ToTvol = 0
 
     ' If immediate cell is same ticker
     Else
 
       ' Add to the total volume
-      TotVol= TotVol + ws.Cells(i, 7 ).Value
+      ToTvol = ToTvol + ws.Cells(i, 7).Value
 
     End If
+    'Give formatting to Yearly Change
+'Red if it is negative numbers and Green if it is positive number
+If ws.Cells(i, 10).Value > 0 Then
+ws.Cells(i, 10).Interior.ColorIndex = 4
+ElseIf ws.Cells(i, 10).Value < 0 Then
+ws.Cells(i, 10).Interior.ColorIndex = 3
+Else
+ws.Cells(i, 10).Interior.ColorIndex = 2
+End If
 
   Next i
 
 Next ws
 
 End Sub
+  
