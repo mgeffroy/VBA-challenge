@@ -8,39 +8,39 @@ Sub Stockmarket():
 'Things have to be valid for all spreadsheets
 
 'Plan of action
-'Loop for all spreadsheets
 
-For Each ws In Worksheets
 
 'Variables: name, type,value (depending on variable)
 Dim Ticker As String
 
 Dim Yearlychange As Double
-Yearlychange = 0
 'Yearly change = Closing - Opening '
-
 Dim Opening As Double
-Opening = ws.Cells(2, 3).Value
-
 Dim Closing As Double
 'Could be Closing = ws.Cells(2,6).Value but it has to be the last value of the ticker
-
 Dim Percentchange As Double
 'Yearlychange in percent
-
 Dim ToTvol As LongLong
-ToTvol = 0
-
-
-'Summary table to keep track of tickers
-Dim Summary_Table_Row As Integer
-  Summary_Table_Row = 2
-  
 
 'Bonus: Add variables
 Dim grt_increase As Integer
 Dim grt_decrease As Integer
 Dim grt_totvol As LongLong
+
+'Loop for all spreadsheets
+
+For Each ws In Worksheets
+
+'Give values to variables
+Opening = ws.Cells(2, 3).Value
+ToTvol = 0
+Yearlychange = 0
+
+
+'Summary table to keep track of tickers
+Dim Summary_Table_Row As Integer
+ Summary_Table_Row = 2
+ 
 
 
 'Name headers in spreadsheet ( with a little bit of formatting)
@@ -121,6 +121,7 @@ ws.Range("O2:O4").Columns.AutoFit
     End If
     'Give formatting to Yearly Change
 'Red if it is negative numbers and Green if it is positive number
+
 If ws.Cells(i, 10).Value > 0 Then
 ws.Cells(i, 10).Interior.ColorIndex = 4
 ElseIf ws.Cells(i, 10).Value < 0 Then
