@@ -37,6 +37,10 @@ Dim Summary_Table_Row As Integer
   Summary_Table_Row = 2
   
 
+'Bonus: Add variables 
+Dim grt_increase as Integer
+Dim grt_decrease as Integer
+Dim grt_totvol as LongLong 
 
 
 'Name headers in spreadsheet ( with a little bit of formatting)
@@ -115,6 +119,8 @@ ws.Cells(i, 10).Interior.ColorIndex = 3
 End If
 
   Next i
+'Give formatting to percent 
+Range("K:K").NumberFormat = "0.00%"
 
 Next ws
 
