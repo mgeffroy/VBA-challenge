@@ -54,6 +54,14 @@ ws.Columns("G").Columns.AutoFit
 ws.Columns("B").Columns.AutoFit
 ws.Range("A1:L1").HorizontalAlignment = xlCenter
 
+'Bonus headers and cells with names
+ws.Cells(1,16).Value = "Ticker"
+ws.Cells(1,17).Value = "Value"
+ws.Range("O2").Value = "Greatest Increase %"
+ws.Range("O3").Value = "Greatest Decrease %"
+ws.Range("O4").Value = "Gretest Total Volume"
+ws.Range("O2:O4").Columns.AutoFit
+
 'Create lastrow variable
  Dim lastrow As Long
   lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
